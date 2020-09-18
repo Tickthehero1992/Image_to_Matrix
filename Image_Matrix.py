@@ -1,5 +1,13 @@
 import random
 from PIL import Image,ImageDraw
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-p', '--path', action='store', help='This is the path')
+parser.add_argument('-w', '--width', action='store', help='This is the width')
+parser.add_argument('-l', '--height', action='store', help='This is the height')
+parser.add_argument ('-t', '--type', action='store', help='This is the type of transformation')
+
 
 class ImageMatrix():
   def __init__(self,path,width,height):
@@ -16,13 +24,13 @@ class ImageMatrix():
 
   def make_gray(self):
    fl=open("file_data.h", mode='w', encoding='utf-8')
-   fl.write("const unsigned char gImage_2[11040]={\n")
+   array_size=self.img_width*self.img_height/2
+   st_to_write="const unsigned char gImage_2["+str(int(array_size))+"]={\n"
+   fl.write(st_to_write)
    iter=0
    st="0x"
    for i in range(self.img_width):
     for j in range(self.img_height-1,-1,-1):
-     #print(i)
-     #print(j)
      a=self.pix[i,j][0]
      b=self.pix[i,j][1]
      c=self.pix[i,j][2]
@@ -60,7 +68,11 @@ class ImageMatrix():
    fl.write("};")
 
 
-img=ImageMatrix("pug.jpg", 104, 212)    
-img.make_gray()  
-     
+#img=ImageMatrix("pug.jpg", 104, 212)    
+#img.make_gray()  
 
+if __name__=="__main__":     
+	#print(parser.parse_args().path)
+        img=ImageMatrix(parser.parse_args().path, int(parser.parse_args().width), int(parser.parse_args().height))
+        if(parser.parse_args().type=="g"):
+         img.make_gray() 

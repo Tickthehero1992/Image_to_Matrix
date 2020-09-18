@@ -18,6 +18,7 @@ class ImageMatrix():
    fl=open("file_data.h", mode='w', encoding='utf-8')
    fl.write("const unsigned char gImage_2[11040]={\n")
    iter=0
+   st="0x"
    for i in range(self.img_width-1,-1,-1):
     for j in range(self.img_height-1,-1,-1):
      #print(i)
@@ -26,9 +27,18 @@ class ImageMatrix():
      b=self.pix[i,j][1]
      c=self.pix[i,j][2]
      S= (a+b+c)//3
-     print(S)
-     fl.write(str(hex(S)))
-     fl.write(',')
+     if(S>252):
+        st=st+"F"
+     if(S>160 and S<=252):
+       st=st+"C"
+     if(S>=4 and S<=160):
+       st=st+"8"
+     if(S<4):
+       st=st+"0"
+     if(iter%2==1):
+      fl.write(st)
+      fl.write(',')
+      st="0x"
      iter=iter+1
      if(iter%16==15):
       fl.write('\n')

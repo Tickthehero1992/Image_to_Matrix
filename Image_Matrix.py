@@ -19,7 +19,7 @@ class ImageMatrix():
    fl.write("const unsigned char gImage_2[11040]={\n")
    iter=0
    st="0x"
-   for i in range(self.img_width-1,-1,-1):
+   for i in range(self.img_width):
     for j in range(self.img_height-1,-1,-1):
      #print(i)
      #print(j)
@@ -27,13 +27,13 @@ class ImageMatrix():
      b=self.pix[i,j][1]
      c=self.pix[i,j][2]
      S= (a+b+c)//3
-     if(S>252):
+     if(S>192):
         st=st+"F"
-     if(S>160 and S<=252):
+     if(S>128 and S<=192):
        st=st+"C"
-     if(S>=4 and S<=160):
+     if(S>=64 and S<=128):
        st=st+"8"
-     if(S<4):
+     if(S<64):
        st=st+"0"
      if(iter%2==1):
       fl.write(st)
@@ -60,7 +60,7 @@ class ImageMatrix():
    fl.write("};")
 
 
-img=ImageMatrix("gray.jpg", 104, 212)    
+img=ImageMatrix("pug.jpg", 104, 212)    
 img.make_gray()  
      
 

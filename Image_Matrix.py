@@ -51,19 +51,6 @@ class ImageMatrix():
      if(iter%16==15):
       fl.write('\n')
       
-   """for i in range(self.img_height):
-     for j in range(self.img_width):
-       	  a=self.pix[j,i][0]
-          b=self.pix[j,i][1]
-          c=self.pix[j,i][2]
-          S= (a+b+c)//3
-          fl.write(str(hex(S)))
-          fl.write(',')
-          if(j%16==15):
-           fl.write('\n')
-          self.draw.point((i,j), (S,S,S))"""
-   
-
    self.Image.show()
    fl.write("};")
 

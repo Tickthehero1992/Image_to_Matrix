@@ -54,12 +54,74 @@ class ImageMatrix():
    self.Image.show()
    fl.write("};")
 
+  def make_red(self):
+   fl=open("file_data_red.h", mode='w', encoding='utf-8')
+   array_size=self.img_width*self.img_height/4
+   st_to_write="const unsigned char gImage_BW["+str(int(array_size))+"]={\n"
+   fl.write(st_to_write)
+   iter=0
+   st="0x"
+   B=0
+   for i in range(self.img_width):
+    for j in range(self.img_height-1,-1,-1):
+     a=self.pix[i,j][0]
+     b=self.pix[i,j][1]
+     c=self.pix[i,j][2]
+     S= (a+b+c)//3
+     if(S>128):
+      #st=st+'0'
+      B=(B<<1)|1
+     else:
+      B=B<<1
+      #st=st+'0'
+     if(iter%8==7):
+      fl.write(str(B))
+      fl.write(',')
+      st='0x'
+      B=0
+     iter=iter+1
+     if(iter%128==15):
+      fl.write('\n')
+   fl.write("};\n\n")
+   st_to_write="const unsigned char gImage_R["+str(int(array_size))+"]={\n"
+   fl.write(st_to_write)
+   iter=0
+   st="0x"
+   B=0
+   for i in range(self.img_width):
+    for j in range(self.img_height-1,-1,-1):
+     a=self.pix[i,j][0]
+     b=self.pix[i,j][1]
+     c=self.pix[i,j][2]
+     if(a>0) and b<128 and c<128:
+       B=B<<1
+       #st=st+'F'
+     else:
+       B=B<<1|1 
+       #st=st+'F'
+     if(iter%8==7):
+      fl.write(str(B))
+      fl.write(',')
+      st='0x'
+      B=0   
+     iter=iter+1
+     if(iter%16==15):
+      fl.write('\n')
+     #self.draw.point((i,j),fill=(b,a,c))
+   #self.Image.show()
+   fl.write("};\n\n")   
+   fl.close() 
+   
 
-#img=ImageMatrix("pug.jpg", 104, 212)    
-#img.make_gray()  
-
+"""
+img=ImageMatrix("wr.jpeg", 128, 296)    
+img.make_red()  
+"""
 if __name__=="__main__":     
 	#print(parser.parse_args().path)
         img=ImageMatrix(parser.parse_args().path, int(parser.parse_args().width), int(parser.parse_args().height))
         if(parser.parse_args().type=="g"):
          img.make_gray() 
+        if (parser.parse_args().type=="r"):
+         img.make_red()
+

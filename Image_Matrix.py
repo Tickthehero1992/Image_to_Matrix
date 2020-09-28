@@ -56,7 +56,7 @@ class ImageMatrix():
 
   def make_red(self):
    fl=open("file_data_red.h", mode='w', encoding='utf-8')
-   array_size=self.img_width*self.img_height/4
+   array_size=self.img_width*self.img_height/8
    st_to_write="const unsigned char gImage_BW["+str(int(array_size))+"]={\n"
    fl.write(st_to_write)
    iter=0

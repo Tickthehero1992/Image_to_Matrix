@@ -63,7 +63,7 @@ class ImageMatrix():
    st="0x"
    B=0
    for i in range(self.img_width):
-    for j in range(self.img_height-1,-1,-1):
+    for j in range(self.img_height):
      a=self.pix[i,j][0]
      b=self.pix[i,j][1]
      c=self.pix[i,j][2]
@@ -89,11 +89,11 @@ class ImageMatrix():
    st="0x"
    B=0
    for i in range(self.img_width):
-    for j in range(self.img_height-1,-1,-1):
+    for j in range(self.img_height):
      a=self.pix[i,j][0]
      b=self.pix[i,j][1]
      c=self.pix[i,j][2]
-     if(a>0) and b<128 and c<128:
+     if a>128 and b<128 and c<128:
        B=B<<1
        #st=st+'F'
      else:

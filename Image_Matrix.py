@@ -4,13 +4,14 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-p', '--path', action='store', help='This is the path')
+parser.add_argument ('-o', '--output', action='store', help='This is output file')
 parser.add_argument('-w', '--width', action='store', help='This is the width')
 parser.add_argument('-l', '--height', action='store', help='This is the height')
 parser.add_argument ('-t', '--type', action='store', help='This is the type of transformation')
 
 
 class ImageMatrix():
-  def __init__(self,path,width,height):
+  def __init__(self,path,width,height,path_out="file_data.c"):
      self.path=path
      self.Image=Image.open(self.path)
      self.height=height
@@ -20,10 +21,10 @@ class ImageMatrix():
      self.img_height=self.Image.size[1]     
      self.draw=ImageDraw.Draw(self.Image)
      self.pix=self.Image.load()
-     
+     self.path_out=path_out
 
   def make_gray(self):
-   fl=open("file_data.h", mode='w', encoding='utf-8')
+   fl=open(self.path_out, mode='w', encoding='utf-8')
    array_size=self.img_width*self.img_height/2
    st_to_write="const unsigned char gImage_2["+str(int(array_size))+"]={\n"
    fl.write(st_to_write)
@@ -55,7 +56,7 @@ class ImageMatrix():
    fl.write("};")
 
   def make_red(self):
-   fl=open("file_data_red.h", mode='w', encoding='utf-8')
+   fl=open(self.path_out, mode='w', encoding='utf-8')
    array_size=self.img_width*self.img_height/8
    st_to_write="const unsigned char gImage_BW["+str(int(array_size))+"]={\n"
    fl.write(st_to_write)
@@ -119,7 +120,11 @@ img.make_red()
 """
 if __name__=="__main__":     
 	#print(parser.parse_args().path)
-        img=ImageMatrix(parser.parse_args().path, int(parser.parse_args().width), int(parser.parse_args().height))
+        if(type(parser.parse_args().output)==str):
+           out=parser.parse_args().output
+        else:
+           out="file_data.c"
+        img=ImageMatrix(parser.parse_args().path, int(parser.parse_args().width), int(parser.parse_args().height),out)
         if(parser.parse_args().type=="g"):
          img.make_gray() 
         if (parser.parse_args().type=="r"):

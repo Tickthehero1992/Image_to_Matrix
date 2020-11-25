@@ -15,7 +15,7 @@ class ImageCutter():
      self.width_tr=20
      self.width_td=20
      self.tr=52
-     self.td=30
+     self.td=34
      if(os.path.exists(self.path_out)==False):
       os.makedirs(self.path_out)
          
@@ -76,15 +76,16 @@ class ImageCutter():
    im4=self.Image.crop((left,top,right, bottom))
    im4.save("ASCII/"+"img7.jpg")
    """
+   bottom=self.td
    for i in range(15):
-    if(i==0):
-     top=top+self.td+10
+    """if(i==0):
+     top=top+self.td
     if(0<i<4):
-     top=bottom+10
+     top=bottom
     if(7>i>=4):
-      top=bottom+10
+      top=bottom
     if(i>=7):
-     top=bottom+15
+     top=bottom
       
     if(7>i>=4):
      bottom=(i+2)*self.td
@@ -93,8 +94,12 @@ class ImageCutter():
     if(i<=1):
       bottom=(i+2)*self.td
     if(i>=7):
-     bottom=(i+2)*self.td
-     
+     bottom=(i+2)*self.td"""
+    if(i==0):
+     top=31
+    else:
+     top=bottom
+    bottom=(i+2)*self.td
     right=self.tr-20
     
     im4=self.Image.crop((left,top,right, bottom))

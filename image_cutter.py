@@ -25,81 +25,15 @@ class ImageCutter():
    top=0
    
    left=left+10
-   """top=top+self.td+10
-   right=self.tr-20
-   bottom=2*self.td
-   im1=self.Image.crop((left,top,right, bottom))
-   #im1.show()
-   im1.save("ASCII/"+"img.jpg")
-   
-   top=bottom+10
-   right=self.tr-20
-   bottom=3*self.td
-   im2=self.Image.crop((left,top,right, bottom))
-   #im2.show()
-   im2.save("ASCII/"+"img2.jpg")
-   
-   top=bottom+10
-   right=self.tr-20
-   bottom=4*self.td+10
-   im3=self.Image.crop((left,top,right, bottom))
-   #im2.show()
-   im3.save("ASCII/"+"img3.jpg")
-   
-   
-   top=bottom+10
-   right=self.tr-30
-   bottom=5*self.td+10
-   im4=self.Image.crop((left,top,right, bottom))
-   #im2.show()
-   im4.save("ASCII/"+"img4.jpg")
-   
-   
-   top=bottom+10
-   right=self.tr-20
-   bottom=6*self.td+20
-   im4=self.Image.crop((left,top,right, bottom))
-   im4.save("ASCII/"+"img5.jpg")
-   
-   
-   
-   top=bottom+10
-   right=self.tr-20
-   bottom=7*self.td+20
-   im4=self.Image.crop((left,top,right, bottom))
-   im4.save("ASCII/"+"img6.jpg")
-   
-   
-   top=bottom+10
-   right=self.tr-20
-   bottom=8*self.td+20
-   im4=self.Image.crop((left,top,right, bottom))
-   im4.save("ASCII/"+"img7.jpg")
-   """
    bottom=self.td
    for i in range(15):
-    """if(i==0):
-     top=top+self.td
-    if(0<i<4):
-     top=bottom
-    if(7>i>=4):
-      top=bottom
-    if(i>=7):
-     top=bottom
-      
-    if(7>i>=4):
-     bottom=(i+2)*self.td
-    if(4>i>1):
-     bottom=(i+2)*self.td
-    if(i<=1):
-      bottom=(i+2)*self.td
-    if(i>=7):
-     bottom=(i+2)*self.td"""
     if(i==0):
-     top=31
+     top=34
     else:
      top=bottom
     bottom=(i+2)*self.td
+    if(i<4):
+     bottom=bottom-3
     right=self.tr-20
     
     im4=self.Image.crop((left,top,right, bottom))

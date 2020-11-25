@@ -143,6 +143,41 @@ class ImageMatrix():
       fl.write('\n')
    fl.write("};\n\n")
    fl.close() 
+   
+  def make_black_partial(self):
+   fl=open(self.path_out, mode='w', encoding='utf-8')
+   array_size= self.img_width*self.img_height/8 if ((self.img_width*self.img_height)%8) else (int(self.img_width*self.img_height/8))+1
+   
+   st_to_write="const unsigned char gImage_BW["+str(int(array_size))+"]={\n"
+   fl.write(st_to_write)
+   iter=0
+   st="0x"
+   B=0
+   #Width = (width % 8 == 0)? (width / 8 ): (width/ 8 + 1);
+   dev=self.img_width/8 if (self.img_width%8==0) else (int(self.img_width/8) +1) 
+   it=0
+   for i in range(self.img_width):
+    for j in range(self.img_height):
+     a=self.pix[i,j][0]
+     b=self.pix[i,j][1]
+     c=self.pix[i,j][2]
+     S= (a+b+c)//3
+     if(S>128):
+      #st=st+'0'
+      B=(B<<1)|1
+     else:
+      B=B<<1
+      #st=st+'0'
+     if(iter%8==7):
+      fl.write(str(B))
+      fl.write(',')
+      st='0x'
+      B=0
+     iter=iter+1
+     if(iter%128==15):
+      fl.write('\n')
+   fl.write("};\n\n")
+   fl.close() 
 
 """
 img=ImageMatrix("wr.jpeg", 128, 296)    
@@ -161,4 +196,5 @@ if __name__=="__main__":
          img.make_red()
         if (parser.parse_args().type=="b"):
          img.make_black()
-
+        if (parser.parse_args().type=='p'):
+         img.make_black_partial()

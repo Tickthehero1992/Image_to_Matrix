@@ -26,7 +26,7 @@ class ImageCutter():
    
    #left=left+10
    #bottom=self.td
-   for j in range(13):
+   for j in range(14):
     
     left=self.tr*j+8
     right=(j+1)*self.tr-12

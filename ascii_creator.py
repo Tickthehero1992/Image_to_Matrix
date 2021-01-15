@@ -8,8 +8,8 @@ def create_c():
  list_files=os.listdir(default_in_folder)
  if(os.path.exists(default_folder_out)==False):
   os.makedirs(default_folder_out)
- width=8
- height=12
+ width=48
+ height=48
  for l in list_files:
   name_path=default_in_folder+'/'+l
   name_out=default_folder_out+'/'+l[:-3]+'.c'

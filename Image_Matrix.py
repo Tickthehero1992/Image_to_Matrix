@@ -90,7 +90,7 @@ class ImageMatrix():
    st="0x"
    B=0
    for i in range(self.img_width):
-    for j in range(self.img_height):
+    for j in range(self.img_height-1,-1,-1):
      a=self.pix[i,j][0]
      b=self.pix[i,j][1]
      c=self.pix[i,j][2]
@@ -106,7 +106,7 @@ class ImageMatrix():
       st='0x'
       B=0   
      iter=iter+1
-     if(iter%16==15):
+     if(iter%128==15):
       fl.write('\n')
      #self.draw.point((i,j),fill=(b,a,c))
    #self.Image.show()

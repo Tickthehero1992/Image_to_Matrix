@@ -52,8 +52,6 @@ class ImageCutter():
       
       
   
-  
-  
 img_cutter=ImageCutter()
 img_cutter.cutter()
      

@@ -63,8 +63,8 @@ class ImageMatrix():
    iter=0
    st="0x"
    B=0
-   for i in range(self.img_width):
-    for j in range(self.img_height-1,-1,-1):
+   for i in range(self.img_width-1,-1,-1):
+    for j in range(self.img_height):
      a=self.pix[i,j][0]
      b=self.pix[i,j][1]
      c=self.pix[i,j][2]
@@ -89,8 +89,8 @@ class ImageMatrix():
    iter=0
    st="0x"
    B=0
-   for i in range(self.img_width):
-    for j in range(self.img_height-1,-1,-1):
+   for i in range(self.img_width-1,-1,-1):
+    for j in range(self.img_height):
      a=self.pix[i,j][0]
      b=self.pix[i,j][1]
      c=self.pix[i,j][2]
@@ -157,7 +157,7 @@ class ImageMatrix():
    dev=self.img_width/8 if (self.img_width%8==0) else (int(self.img_width/8) +1) 
    it=0
    for i in range(self.img_width):
-    for j in range(self.img_height):
+    for j in range(self.img_height-1,-1,-1):
      a=self.pix[i,j][0]
      b=self.pix[i,j][1]
      c=self.pix[i,j][2]

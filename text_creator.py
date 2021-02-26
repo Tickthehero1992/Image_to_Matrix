@@ -31,6 +31,6 @@ class CreatorText():
       self.__create_one_img__(n)
     
     
-crT=CreatorText(path_dir=text_dir,font_path=font_dir+times_new_roman, size=12)
-crT=CreatorText(path_dir=text_dir,font_path=font_dir+arial, size=12)
+crT=CreatorText(path_dir=text_dir,font_path=font_dir+times_new_roman, size=48)
+crT=CreatorText(path_dir=text_dir,font_path=font_dir+arial, size=48)
 crT.create_all_symblos()

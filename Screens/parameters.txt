@@ -1,0 +1,2 @@
+buttons -l 104 -w 24 -t p 
+power_head -l 250 -w 64

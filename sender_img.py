@@ -1,6 +1,6 @@
 import os
 import serial
-
+import time
 default_path="CreatedText_Arial._10_C"
 default_ser_name="/dev/ttyACM0"
 """
@@ -33,8 +33,9 @@ class sendes:
   return array_size, array, name, name_file[0]
      
  def write_characters(self):
+   self.ser.flush()
    for name in os.listdir(self.path):
-    #print(name)
+    print(name)
     size,array,name_code,name=self.send_to_com(name)
     size=size.to_bytes(1,byteorder='little')
     name_code=name_code.to_bytes(1, byteorder='big')
@@ -46,17 +47,20 @@ class sendes:
     for ar in array:
       ss.append(int(ar))
     #ss=str()
-    #print(ss)
+    print(len(ss))
     self.ser.write(bytearray(ss)) 
-    #while(self.check()==False):
-    #  pass
-    x=input("Ready:")
-    if(x=="exit"):
-     break
+    while(self.check()==False):
+      pass
+   
+    time.sleep(1)
+    #break
+    
      
      
  def check(self):
-  if(self.ser.read()):
+  OK=self.ser.read(size=2).decode()
+  if(OK=="OK"):
+   print(OK)
    return True
   else:
    return False

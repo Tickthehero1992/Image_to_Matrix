@@ -5,6 +5,7 @@ default_path="CreatedText_Arial._10_C"
 default_ser_name="/dev/ttyACM0"
 default_logos_dir="logo_bw"
 default_logos_red_dir="logo_rbw"
+default_buttons_dir= "buttons"
 
 """
 Протокол 1 байт- функция, 1 - байт тип, 2-байта размер.
@@ -15,10 +16,11 @@ default_logos_red_dir="logo_rbw"
 0х04 - передача кнопок тип - 00 - да, 01 - нет, 02 - скрин вкл/выкл, 03 - перезагрузка
 """
 class sendes:
- def __init__(self,path_char,ser_name,path_bw,path_rbw):
+ def __init__(self,path_char=None,ser_name=None,path_bw=None,path_rbw=None, path_btn=None):
    self.path=path_char
    self.path_bw=path_bw
    self.path_rbw=path_rbw
+   self.path_btn=path_btn
    self.ser=serial.Serial(ser_name, 115200, timeout=1)
    
  def send_to_com(self,name_file,path):
@@ -122,6 +124,36 @@ class sendes:
     while(self.check()==False):
        pass
        
+ def write_btn(self):
+  for name in os.listdir(self.path_btn):
+    size,array,name_code,names=self.send_to_com(name,self.path_btn)
+    #print(name_code)
+    Id=0
+    if(name_code=="cancel.c"):
+     Id=3
+    if(name_code=="yes.c"):
+     Id=4
+    if(name_code=="OFF.c"):
+     Id=2
+    if(name_code=="reboot.c"):
+     Id=1
+    #print(name_code)
+    size=size.to_bytes(2,byteorder='little')
+    st=b"\x04"+Id.to_bytes(1,byteorder='big')+size
+    #print(st)
+    self.ser.write(st)
+    while(self.check()==False):
+     pass
+    ss=[] 
+    for ar in array:
+     ss.append(int(ar))
+      #print(st)
+    self.ser.write(bytearray(ss)) 
+    while(self.check()==False):
+       pass
+    
+         
+       
        
  def erasing(self):
     st=b"\x05\x08\x07\x02"
@@ -141,8 +173,10 @@ class sendes:
   else:
    return False
      
-cl=sendes(default_path,default_ser_name,default_logos_dir,default_logos_red_dir)     
-#cl.write_characters()
-#cl.write_bw_logo()
-#cl.write_rbw()
-cl.erasing()
+cl=sendes(default_path,default_ser_name,default_logos_dir,default_logos_red_dir,default_buttons_dir)     
+#cl.erasing()
+cl.write_characters()
+cl.write_bw_logo()
+cl.write_rbw()
+cl.write_btn()
+

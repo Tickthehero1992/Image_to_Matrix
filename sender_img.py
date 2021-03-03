@@ -1,11 +1,15 @@
 import os
 import serial
 import time
+import argparse
 default_path="CreatedText_Arial._10_C"
 default_ser_name="/dev/ttyACM0"
 default_logos_dir="logo_bw"
 default_logos_red_dir="logo_rbw"
 default_buttons_dir= "buttons"
+
+parser = argparse.ArgumentParser()
+parser.add_argument ('-t', '--type', action='store', help='This is the type of operation', default=None)
 
 """
 Протокол 1 байт- функция, 1 - байт тип, 2-байта размер.
@@ -174,9 +178,22 @@ class sendes:
    return False
      
 cl=sendes(default_path,default_ser_name,default_logos_dir,default_logos_red_dir,default_buttons_dir)     
-#cl.erasing()
-cl.write_characters()
-cl.write_bw_logo()
-cl.write_rbw()
-cl.write_btn()
+
+if __name__=="__main__":    
+ if(parser.parse_args().type==None):
+  cl.erasing()
+  cl.write_characters()
+  cl.write_bw_logo()
+  cl.write_rbw()
+  cl.write_btn()
+ if(parser.parse_args().type=='erase'):
+  cl.erasing()
+ if(parser.parse_args().type=='characters'):
+  cl.write_characters()
+ if(parser.parse_args().type=='black'):
+  cl.write_bw_logo()
+ if(parser.parse_args().type=='red'):
+  cl.write_rbw()
+ if(parser.parse_args().type=='buttons'):
+   cl.write_btn()
 

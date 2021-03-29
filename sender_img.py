@@ -21,10 +21,11 @@ parser.add_argument ('-t', '--type', action='store', help='This is the type of o
 """
 class sendes:
  def __init__(self,path_char=None,ser_name=None,path_bw=None,path_rbw=None, path_btn=None):
-   self.path=path_char
-   self.path_bw=path_bw
-   self.path_rbw=path_rbw
-   self.path_btn=path_btn
+   self.my_path=os.path.realpath(__file__)[:-len("sender_img.py")]
+   self.path=os.path.join(self.my_path,path_char)
+   self.path_bw=os.path.join(self.my_path,path_bw)
+   self.path_rbw=os.path.join(self.my_path,path_rbw)
+   self.path_btn=os.path.join(self.my_path,path_btn)
    self.ser=serial.Serial(ser_name, 115200, timeout=1)
    
  def send_to_com(self,name_file,path):
@@ -168,7 +169,13 @@ class sendes:
     self.ser.write(st)
     while(self.check()==False):
      pass
- 
+     
+ def reboot(self):
+    st=b"\x06\x08\x07\x02"
+    self.ser.write(st)
+    self.ser.close()
+    sys.exit(0)
+  
  def check(self):
   OK=self.ser.read(size=2).decode()
   if(OK=="OK"):
@@ -181,11 +188,18 @@ cl=sendes(default_path,default_ser_name,default_logos_dir,default_logos_red_dir,
 
 if __name__=="__main__":    
  if(parser.parse_args().type==None):
+  print("start erase")
   cl.erasing()
+  print("start character write")
   cl.write_characters()
+  print("start bw logs")
   cl.write_bw_logo()
+  print("start rbd logs")
   cl.write_rbw()
+  print("start btns")
   cl.write_btn()
+  print("start reboot")
+  cl.reboot()
  if(parser.parse_args().type=='erase'):
   cl.erasing()
  if(parser.parse_args().type=='characters'):
